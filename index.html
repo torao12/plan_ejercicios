@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan de Fitness Personalizado - Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Plan de Fitness Personalizado - Dashboard Móvil</title>
     <style>
         :root {
             --bg-global: #f1f5f9;
@@ -24,22 +24,29 @@
             --radius-lg: 16px;
             --radius-md: 12px;
             --radius-sm: 8px;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --transition: all 0.2s ease-in-out;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-global);
             color: var(--text-main);
-            line-height: 1.6;
-            padding: 24px;
+            line-height: 1.5;
+            padding: 12px;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 24px;
+            }
         }
 
         .dashboard-container {
@@ -51,77 +58,99 @@
         header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
-            padding: 32px;
-            border-radius: var(--radius-lg);
-            margin-bottom: 24px;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
             box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
         }
 
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 50%;
+        @media (min-width: 768px) {
+            header {
+                padding: 32px;
+                border-radius: var(--radius-lg);
+                margin-bottom: 24px;
+            }
         }
 
         header h1 {
-            font-size: 28px;
+            font-size: 20px;
             font-weight: 800;
             letter-spacing: -0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            header h1 {
+                font-size: 28px;
+                margin-bottom: 8px;
+            }
         }
 
         header p {
             color: #ccfbf1;
-            font-size: 16px;
-            max-width: 600px;
+            font-size: 13px;
         }
 
-        /* Layout Grid for Navigation and Content */
-        .layout-main {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 24px;
-        }
-
-        @media (max-width: 968px) {
-            .layout-main {
-                grid-template-columns: 1fr;
+        @media (min-width: 768px) {
+            header p {
+                font-size: 16px;
             }
         }
 
-        /* Sidebar Navigation Tabs */
+        /* Layout Structure */
+        .layout-main {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 968px) {
+            .layout-main {
+                grid-template-columns: 280px 1fr;
+                gap: 24px;
+            }
+        }
+
+        /* Mobile Responsive Navigation Tabs */
         .nav-tabs {
             background-color: var(--surface);
-            padding: 16px;
+            padding: 8px;
             border-radius: var(--radius-md);
             box-shadow: var(--shadow);
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-            height: fit-content;
+            flex-direction: row;
+            overflow-x: auto;
+            white-space: nowrap;
+            gap: 4px;
+            scrollbar-width: none; /* Firefox */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border: 1px solid var(--border);
         }
 
-        @media (max-width: 968px) {
+        .nav-tabs::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+        }
+
+        @media (min-width: 968px) {
             .nav-tabs {
-                flex-direction: row;
-                overflow-x: auto;
-                white-space: nowrap;
+                flex-direction: column;
+                padding: 16px;
+                gap: 8px;
+                height: fit-content;
+                position: relative;
+                top: auto;
             }
         }
 
         .tab-btn {
             background: none;
             border: none;
-            padding: 14px 18px;
-            text-align: left;
-            font-size: 15px;
+            padding: 10px 14px;
+            text-align: center;
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-muted);
             border-radius: var(--radius-sm);
@@ -129,7 +158,18 @@
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            flex-shrink: 0;
+            min-height: 44px; /* Mobile Friendly Tap Target */
+        }
+
+        @media (min-width: 968px) {
+            .tab-btn {
+                padding: 14px 18px;
+                text-align: left;
+                font-size: 15px;
+                width: 100%;
+            }
         }
 
         .tab-btn:hover {
@@ -145,10 +185,16 @@
         /* Content Panel */
         .content-panel {
             background-color: var(--surface);
-            padding: 32px;
+            padding: 16px;
             border-radius: var(--radius-md);
             box-shadow: var(--shadow);
-            min-height: 500px;
+            border: 1px solid var(--border);
+        }
+
+        @media (min-width: 768px) {
+            .content-panel {
+                padding: 32px;
+            }
         }
 
         .tab-content {
@@ -157,32 +203,52 @@
 
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.3s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
+            from { opacity: 0; transform: translateY(2px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Profile Grid & Metrics Card */
+        /* Profile & Metrics Grid */
         .profile-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 600px) {
+            .profile-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .profile-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 16px;
+                margin-bottom: 32px;
+            }
         }
 
         .metric-card {
             background-color: var(--surface-variant);
             border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: var(--radius-md);
-            position: relative;
+            padding: 14px;
+            border-radius: var(--radius-sm);
+        }
+
+        @media (min-width: 768px) {
+            .metric-card {
+                padding: 20px;
+                border-radius: var(--radius-md);
+            }
         }
 
         .metric-card .label {
-            font-size: 13px;
+            font-size: 11px;
             color: var(--text-muted);
             font-weight: 600;
             text-transform: uppercase;
@@ -190,135 +256,136 @@
         }
 
         .metric-card .value {
-            font-size: 24px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--text-main);
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
-        .metric-card.highlight {
-            border-left: 4px solid var(--primary);
+        @media (min-width: 768px) {
+            .metric-card .value {
+                font-size: 22px;
+                margin-top: 4px;
+            }
         }
 
-        .metric-card.alert {
-            border-left: 4px solid var(--warning);
-            background-color: #fffbeb;
-        }
+        .metric-card.highlight { border-left: 4px solid var(--primary); }
+        .metric-card.alert { border-left: 4px solid var(--warning); background-color: #fffbeb; }
 
-        /* Strict Restriction Callout Box */
+        /* Restriction Box */
         .restriction-box {
             background-color: var(--accent-bg);
             border: 1px solid #fecdd3;
-            padding: 20px;
+            padding: 16px;
             border-radius: var(--radius-md);
-            margin-bottom: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            margin-bottom: 24px;
         }
 
         .restriction-box h3 {
             color: var(--accent);
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 8px;
         }
 
         .restriction-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 4px;
+            gap: 6px;
         }
 
         .tag {
             background-color: var(--surface);
             color: var(--accent);
             border: 1px solid #ffe4e6;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
         }
 
-        /* Section Headings */
+        /* Titles */
         h2.section-title {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 20px;
-            padding-bottom: 8px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
             border-bottom: 2px solid var(--surface-variant);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
         }
 
-        /* Custom Interactive Tables */
+        @media (min-width: 768px) {
+            h2.section-title {
+                font-size: 22px;
+                margin-bottom: 20px;
+                padding-bottom: 8px;
+            }
+        }
+
+        /* Tables Responsiveness */
         .table-container {
             width: 100%;
             overflow-x: auto;
             margin-bottom: 24px;
             border: 1px solid var(--border);
             border-radius: var(--radius-sm);
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 15px;
+            font-size: 14px;
+            min-width: 500px; /* Forces scroll on small devices instead of squishing */
+        }
+
+        @media (min-width: 768px) {
+            table { font-size: 15px; }
         }
 
         th {
             background-color: var(--surface-variant);
             color: var(--text-main);
             font-weight: 600;
-            padding: 14px 16px;
+            padding: 12px 14px;
             border-bottom: 2px solid var(--border);
         }
 
         td {
-            padding: 14px 16px;
+            padding: 12px 14px;
             border-bottom: 1px solid var(--border);
             color: var(--text-muted);
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background-color: var(--surface-variant);
-            color: var(--text-main);
-        }
-
-        /* Week Day Toggles */
+        /* Day Selector Wheel for Mobile */
         .day-selector {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             overflow-x: auto;
-            padding-bottom: 8px;
-            margin-bottom: 24px;
+            padding-bottom: 6px;
+            margin-bottom: 16px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .day-selector::-webkit-scrollbar {
+            display: none;
         }
 
         .day-btn {
             background-color: var(--surface-variant);
             border: 1px solid var(--border);
             color: var(--text-muted);
-            padding: 10px 16px;
+            padding: 8px 14px;
             border-radius: var(--radius-sm);
             cursor: pointer;
             font-weight: 600;
             white-space: nowrap;
-            transition: var(--transition);
-        }
-
-        .day-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
+            font-size: 13px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
         }
 
         .day-btn.active {
@@ -327,70 +394,94 @@
             border-color: var(--primary);
         }
 
-        /* Workout Interface Design */
+        /* Workout Viewer */
         .workout-viewer {
             background-color: var(--surface-variant);
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 16px;
             border: 1px solid var(--border);
+        }
+
+        @media (min-width: 768px) {
+            .workout-viewer { padding: 24px; }
         }
 
         .workout-header-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
             border-bottom: 1px dashed var(--border);
         }
 
         .focus-badge {
             background-color: var(--primary-bg);
             color: var(--primary);
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 4px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .exercise-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .exercise-item {
             background-color: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius-sm);
-            padding: 16px;
+            padding: 12px;
             display: flex;
+            flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            transition: var(--transition);
-        }
-
-        .exercise-item:hover {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            gap: 12px;
         }
 
         .exercise-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
+            flex: 1;
         }
 
         .exercise-checkbox {
-            width: 22px;
-            height: 22px;
+            width: 24px; /* Enlarged for touch */
+            height: 24px;
             accent-color: var(--primary);
             cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .exercise-name {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 14px;
+            line-height: 1.3;
+        }
+
+        @media (min-width: 768px) {
+            .exercise-name { font-size: 16px; }
+        }
+
+        .exercise-badge-right {
+            background-color: var(--bg-global);
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            text-align: right;
         }
 
         .exercise-item.completed {
             background-color: #f0fdf4;
             border-color: #bbf7d0;
-            opacity: 0.75;
+            opacity: 0.7;
         }
 
         .exercise-item.completed .exercise-name {
@@ -398,102 +489,69 @@
             color: var(--text-muted);
         }
 
-        .exercise-name {
-            font-weight: 600;
-            color: var(--text-main);
-            font-size: 16px;
-        }
-
-        .exercise-meta {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        .exercise-badge-right {
-            background-color: var(--bg-global);
-            padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        /* Meal Cards Container */
+        /* Meal Cards Layout */
         .meal-section-title {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 700;
-            margin: 24px 0 12px 0;
+            margin: 20px 0 10px 0;
             color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .meal-options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .meal-options-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 16px;
+            }
         }
 
         .meal-card {
             background-color: var(--surface-variant);
             border: 2px solid var(--border);
             border-radius: var(--radius-md);
-            padding: 20px;
+            padding: 16px;
             cursor: pointer;
             transition: var(--transition);
             position: relative;
         }
 
-        .meal-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
         .meal-card.selected {
             border-color: var(--primary);
             background-color: #f0fdfa;
-            box-shadow: var(--shadow);
-        }
-
-        .meal-card.selected::after {
-            content: '✓ Seleccionado';
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            font-size: 11px;
-            background-color: var(--primary);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 700;
         }
 
         .meal-card-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 8px;
-            padding-right: 80px;
+            margin-bottom: 6px;
+            padding-right: 24px;
         }
 
         .meal-card-desc {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-muted);
-            margin-bottom: 16px;
-            min-height: 44px;
+            margin-bottom: 12px;
+            line-height: 1.4;
         }
 
         .macro-pill-box {
             display: flex;
-            gap: 8px;
+            gap: 6px;
+            flex-wrap: wrap;
         }
 
         .macro-pill {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 2px 8px;
+            border-radius: 4px;
             background-color: var(--surface);
             border: 1px solid var(--border);
         }
@@ -502,141 +560,136 @@
         .macro-pill.c { color: #c2410c; border-color: #fdba74; }
         .macro-pill.g { color: #a16207; border-color: #fde047; }
 
-        /* Nutrition Summary Tracker Banner */
+        /* Summary Banner */
         .nutrition-tracker-banner {
             background-color: var(--surface-variant);
             border: 1px solid var(--border);
-            padding: 24px;
+            padding: 16px;
             border-radius: var(--radius-md);
-            margin-top: 32px;
+            margin-top: 24px;
         }
 
         .tracker-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            text-align: center;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        @media (min-width: 600px) {
+            .tracker-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         .tracker-item {
             background-color: var(--surface);
-            padding: 16px;
+            padding: 12px;
             border-radius: var(--radius-sm);
             border: 1px solid var(--border);
+            text-align: center;
         }
 
-        .tracker-val {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
+        .tracker-val { font-size: 18px; font-weight: 700; color: var(--text-main); }
+        .tracker-lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-weight: 600; }
 
-        .tracker-lbl {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 600;
-            margin-top: 2px;
-        }
-
-        /* Hydration UI Component */
+        /* Hydration UI */
         .hydration-ui {
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
             border: 1px solid #7dd3fc;
-            padding: 24px;
+            padding: 16px;
             border-radius: var(--radius-md);
-            margin-top: 24px;
+            margin-top: 20px;
             display: flex;
+            flex-direction: column;
+            gap: 12px;
             align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
+            text-align: center;
         }
 
-        .hydration-left h3 {
-            color: #0369a1;
-            font-size: 18px;
+        @media (min-width: 600px) {
+            .hydration-ui {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+                padding: 20px;
+            }
         }
 
-        .hydration-left p {
-            color: #0c4a6e;
-            font-size: 14px;
-        }
+        .hydration-left h3 { color: #0369a1; font-size: 16px; }
+        .hydration-left p { color: #0c4a6e; font-size: 13px; }
 
         .water-controls {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
         .water-btn {
             background-color: #0284c7;
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 44px; /* Touch target optimized */
+            height: 44px;
             border-radius: 50%;
             font-size: 20px;
             font-weight: bold;
             cursor: pointer;
-            transition: var(--transition);
         }
-
-        .water-btn:hover { background-color: #0369a1; }
 
         .water-counter {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
             color: #0369a1;
-            min-width: 110px;
-            text-align: center;
+            min-width: 120px;
         }
 
-        /* Checklist / Habits */
+        /* Habits Grid */
         .habit-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 768px) {
+            .habit-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 16px;
+            }
         }
 
         .habit-card {
             background-color: var(--surface-variant);
             border: 1px solid var(--border);
-            padding: 20px;
+            padding: 16px;
             border-radius: var(--radius-md);
             display: flex;
-            gap: 16px;
+            gap: 12px;
         }
 
-        .habit-card input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-top: 3px;
-            accent-color: var(--primary);
+        .habit-card-body h4 { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
+        .habit-card-body p { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+
+        .avoid-box {
+            background-color: #fef2f2;
+            border: 1px solid #fee2e2;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            margin-top: 24px;
         }
 
-        .habit-card-body h4 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 4px;
-        }
+        .avoid-box h3 { color: #991b1b; font-size: 16px; margin-bottom: 12px; }
 
-        .habit-card-body p {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        /* Progress Steps Blocks */
+        /* Timeline Progresión */
         .progression-timeline {
             display: flex;
             flex-direction: column;
             gap: 16px;
-            margin-top: 24px;
+            margin-top: 16px;
         }
 
         .progression-step {
             border-left: 3px solid var(--primary);
-            padding-left: 20px;
+            padding-left: 14px;
             position: relative;
         }
 
@@ -644,40 +697,15 @@
             content: '';
             position: absolute;
             left: -7px;
-            top: 4px;
+            top: 5px;
             width: 11px;
             height: 11px;
             border-radius: 50%;
             background-color: var(--primary);
         }
 
-        .progression-step h4 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .progression-step p {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .avoid-box {
-            background-color: #fef2f2;
-            border: 1px solid #fee2e2;
-            padding: 20px;
-            border-radius: var(--radius-md);
-            margin-bottom: 24px;
-        }
-
-        .avoid-box h3 { color: #991b1b; margin-bottom: 12px; }
-
-        .sub-list {
-            margin-left: 20px;
-            margin-top: 8px;
-            font-size: 14px;
-        }
+        .progression-step h4 { font-size: 15px; font-weight: 700; }
+        .progression-step p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
     </style>
 </head>
 <body>
@@ -685,118 +713,79 @@
 <div class="dashboard-container">
     <header>
         <h1>Plan de Fitness e Interfaz de Control</h1>
-        <p>Estrategia integral optimizada para entrenamiento en casa, nutrición controlada y hábitos saludables de oficina.</p>
+        <p>Estrategia adaptada para entrenamiento en casa, control de nutrición y ergonomía de oficina.</p>
     </header>
 
     <div class="layout-main">
-        <!-- Navigation Menu -->
+        <!-- Scrollable Mobile Navigation Menu -->
         <nav class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab(event, 'perfil')">
-                📋 Resumen & Perfil
-            </button>
-            <button class="tab-btn" onclick="switchTab(event, 'entrenamiento')">
-                🏋️ Plan de Entrenamiento
-            </button>
-            <button class="tab-btn" onclick="switchTab(event, 'alimentacion')">
-                🍳 Plan de Alimentación
-            </button>
-            <button class="tab-btn" onclick="switchTab(event, 'habitos')">
-                💼 Hábitos de Oficina
-            </button>
+            <button class="tab-btn active" onclick="switchTab(event, 'perfil')">📋 Perfil</button>
+            <button class="tab-btn" onclick="switchTab(event, 'entrenamiento')">🏋️ Ejercicios</button>
+            <button class="tab-btn" onclick="switchTab(event, 'alimentacion')">🍳 Nutrición</button>
+            <button class="tab-btn" onclick="switchTab(event, 'habitos')">💼 Oficina</button>
         </nav>
 
-        <!-- Main Dynamic Content Panel -->
+        <!-- Main Panel -->
         <main class="content-panel">
 
             <!-- TAB 1: PERFIL -->
             <div id="perfil" class="tab-content active">
-                <h2 class="section-title">Perfil Fisiológico & Objetivos</h2>
+                <h2 class="section-title">Métricas Base</h2>
                 <div class="profile-grid">
-                    <div class="metric-card highlight">
-                        <div class="label">Edad</div>
-                        <div class="value">20 años</div>
-                    </div>
-                    <div class="metric-card highlight">
-                        <div class="label">Altura</div>
-                        <div class="value">1.70 m</div>
-                    </div>
-                    <div class="metric-card alert">
-                        <div class="label">Peso Actual</div>
-                        <div class="value">85 – 90 kg</div>
-                    </div>
-                    <div class="metric-card highlight">
-                        <div class="label">Peso Objetivo</div>
-                        <div class="value">60 – 65 kg</div>
-                    </div>
-                    <div class="metric-card alert">
-                        <div class="label">IMC Estimado</div>
-                        <div class="value">~30.5 (Obesidad Grado I)</div>
-                    </div>
+                    <div class="metric-card highlight"><div class="label">Edad</div><div class="value">20 años</div></div>
+                    <div class="metric-card highlight"><div class="label">Altura</div><div class="value">1.70 m</div></div>
+                    <div class="metric-card alert"><div class="label">Peso Actual</div><div class="value">85–90 kg</div></div>
+                    <div class="metric-card highlight"><div class="label">Objetivo</div><div class="value">60–65 kg</div></div>
+                    <div class="metric-card alert"><div class="label">IMC Actual</div><div class="value">~30.5</div></div>
                 </div>
 
-                <h2 class="section-title">Prioridades de Ejecución Obligatorias (Mes 1)</h2>
-                <div class="habit-grid" style="margin-bottom: 32px;">
+                <h2 class="section-title">Prioridades Críticas Obligatorias</h2>
+                <div class="habit-grid" style="margin-bottom: 24px;">
                     <div class="habit-card">
-                        <input type="checkbox" id="p1">
+                        <input type="checkbox" class="exercise-checkbox" id="p1">
                         <div class="habit-card-body">
-                            <h4>Moverse todos los días</h4>
-                            <p>Aunque sea caminar por lo menos 20 minutos de forma continua. Lo primordial es forjar el hábito antes que la intensidad.</p>
+                            <h4>Moverse a diario</h4>
+                            <p>Caminar mínimo 20 minutos. Construir el hábito es prioritario frente a la intensidad del ejercicio.</p>
                         </div>
                     </div>
                     <div class="habit-card">
-                        <input type="checkbox" id="p2">
+                        <input type="checkbox" class="exercise-checkbox" id="p2">
                         <div class="habit-card-body">
-                            <h4>Eliminar refrescos y jugos</h4>
-                            <p>Sustituir por completo. Este cambio elemental previene la ingesta de 400 a 600 calorías líquidas vacías al día.</p>
+                            <h4>Cero refrescos y jugos</h4>
+                            <p>Sustituir por agua. Evita de golpe un excedente de 400 a 600 kcal líquidas vacías al día.</p>
                         </div>
                     </div>
                     <div class="habit-card">
-                        <input type="checkbox" id="p3">
+                        <input type="checkbox" class="exercise-checkbox" id="p3">
                         <div class="habit-card-body">
-                            <h4>Proteína asegurada</h4>
-                            <p>Consumir fuentes limpias en cada comida principal. Sacia el apetito y preserva la masa muscular limpia.</p>
+                            <h4>Proteína en cada comida</h4>
+                            <p>Asegura huevo, pollo, atún o queso. Controla el hambre y protege la masa muscular.</p>
                         </div>
                     </div>
                     <div class="habit-card">
-                        <input type="checkbox" id="p4">
+                        <input type="checkbox" class="exercise-checkbox" id="p4">
                         <div class="habit-card-body">
-                            <h4>Sueño regulador</h4>
-                            <p>Dormir entre 7 y 8 horas cada noche. Clave para regular la grelina (hambre) y mitigar los picos de cortisol.</p>
+                            <h4>Sueño reparador</h4>
+                            <p>Dormir 7–8 horas de calidad. Regula la grelina (hormona del hambre) y reduce el cortisol.</p>
                         </div>
                     </div>
                 </div>
 
-                <h2 class="section-title">Expectativa Estructurada de Progreso Sostenible</h2>
+                <h2 class="section-title">Expectativa de Progreso Sostenible</h2>
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
-                                <th>Período cronológico</th>
-                                <th>Pérdida acumulada estimada</th>
-                                <th>Enfoque Técnico Operativo</th>
+                                <th>Período</th>
+                                <th>Pérdida esperada</th>
+                                <th>Foco Operativo</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><b>Mes 1 – 2</b></td>
-                                <td>−3 a −5 kg</td>
-                                <td>Fase Base: Enfoque estricto en la técnica de movimientos básicos. Mayor descanso entre series.</td>
-                            </tr>
-                            <tr>
-                                <td><b>Mes 3 – 4</b></td>
-                                <td>−6 a −9 kg</td>
-                                <td>Fase Desarrollo: Incremento de volumen general, reducción de descansos e introducción de carga externa (mochila/botellas).</td>
-                            </tr>
-                            <tr>
-                                <td><b>Mes 5 – 8</b></td>
-                                <td>−12 a −18 kg</td>
-                                <td>Fase Avanzada: Variaciones mecánicas complejas (Pistol squats asistidas, flexiones declinadas, burpees con salto).</td>
-                            </tr>
-                            <tr>
-                                <td><b>Mes 9 – 14</b></td>
-                                <td>−25 kg (Meta cumplida)</td>
-                                <td>Consolidación del peso final de 60–65 kg a un ritmo metabólico óptimo de 0.5 a 1 kg por semana sin rebote.</td>
-                            </tr>
+                            <tr><td><b>Mes 1–2</b></td><td>−3 a −5 kg</td><td>Dominio técnico del movimiento base.</td></tr>
+                            <tr><td><b>Mes 3–4</b></td><td>−6 a −9 kg</td><td>Aumento de series, reducción de descansos. Carga con mochila.</td></tr>
+                            <tr><td><b>Mes 5–8</b></td><td>−12 a −18 kg</td><td>Variantes complejas (Pistol squats / burpees intensos).</td></tr>
+                            <tr><td><b>Mes 9–14</b></td><td>−25 kg (Meta)</td><td>Consolidación definitiva del peso ideal sin rebotes.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -804,7 +793,7 @@
 
             <!-- TAB 2: ENTRENAMIENTO -->
             <div id="entrenamiento" class="tab-content">
-                <h2 class="section-title">Agenda de Distribución Semanal</h2>
+                <h2 class="section-title">Programación Semanal</h2>
                 
                 <div class="day-selector">
                     <button class="day-btn active" onclick="loadWorkout('lunes')">Lunes</button>
@@ -818,197 +807,117 @@
 
                 <div class="workout-viewer">
                     <div class="workout-header-meta">
-                        <h3 id="workout-day-title" style="text-transform: capitalize;">Lunes</h3>
+                        <h3 id="workout-day-title" style="text-transform: capitalize; font-size:16px;">Lunes</h3>
                         <span id="workout-focus" class="focus-badge">Tren Inferior</span>
                     </div>
-                    <p id="workout-notes" style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px; font-style: italic;">Sesión enfocada en fuerza base.</p>
-                    <div class="exercise-list" id="exercise-list-container">
-                        <!-- Elements rendered dynamically via JS -->
-                    </div>
+                    <p id="workout-notes" style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-style: italic;"></p>
+                    <div class="exercise-list" id="exercise-list-container"></div>
                 </div>
 
-                <h3 style="margin-top: 32px; margin-bottom: 12px; font-size: 18px; font-weight: 700;">Evolución y Escalabilidad de Carga</h3>
+                <h2 class="section-title" style="margin-top:24px;">Evolución de Carga</h2>
                 <div class="progression-timeline">
                     <div class="progression-step">
-                        <h4>Mes 1–2 — Consolidación de la Técnica</h4>
-                        <p>Foco absoluto en ejecutar cada repetición de forma limpia. Si el cansancio degrada el movimiento, reduce una serie por ejercicio.</p>
+                        <h4>Mes 1–2: Base</h4>
+                        <p>Domina la ejecución limpia. Descansa lo necesario entre series para no sacrificar postura.</p>
                     </div>
                     <div class="progression-step">
-                        <h4>Mes 3–4 — Sobrecarga Progresiva Casera</h4>
-                        <p>Incrementa el número de series. Reduce el tiempo de recuperación entre asaltos. Utiliza mochilas cargadas con libros o botes de agua para añadir resistencia.</p>
-                    </div>
-                    <div class="progression-step">
-                        <h4>Mes 5 en adelante — Complejidad Mecánica</h4>
-                        <p>Introduce variaciones avanzadas: Pistol squats con apoyo, flexiones de brazos con pies elevados en silla y planchas dinámicas.</p>
+                        <h4>Mes 3–4: Desarrollo</h4>
+                        <p>Suma series y recorta los descansos. Añade resistencia externa progresiva usando mochilas cargadas.</p>
                     </div>
                 </div>
             </div>
 
             <!-- TAB 3: ALIMENTACION -->
             <div id="alimentacion" class="tab-content">
-                <h2 class="section-title">Parámetros Macroeconómicos Nutrientes</h2>
+                <h2 class="section-title">Objetivos Nutricionales</h2>
                 <div class="profile-grid">
-                    <div class="metric-card highlight">
-                        <div class="label">Rango Calórico Objetivo</div>
-                        <div class="value">1,600 – 1,800 kcal / día</div>
-                    </div>
-                    <div class="metric-card highlight">
-                        <div class="label">Proteína diaria</div>
-                        <div class="value">130 – 140 g / día</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="label">Estrategia Carbohidratos</div>
-                        <div class="value">Bajos a Moderados</div>
-                    </div>
-                    <div class="metric-card alert">
-                        <div class="label">Límite Crítico Mínimo</div>
-                        <div class="value">1,500 kcal (No rebasar a la baja)</div>
-                    </div>
+                    <div class="metric-card highlight"><div class="label">Calorías Diarias</div><div class="value">1,600 – 1,800 kcal</div></div>
+                    <div class="metric-card highlight"><div class="label">Proteína Objetivo</div><div class="value">130 – 140 g / día</div></div>
+                    <div class="metric-card"><div class="label">Carbohidratos</div><div class="value">Bajos a Moderados</div></div>
+                    <div class="metric-card alert"><div class="label">Mínimo Absoluto</div><div class="value">1,500 kcal</div></div>
                 </div>
 
                 <div class="restriction-box">
-                    <h3>⚠️ Restricciones Alimentarias Estrictas Aplicadas</h3>
-                    <p>Los menús e ingredientes excluyen rigurosamente los siguientes alimentos por indicación expresa:</p>
+                    <h3>⚠️ Restricciones Alimentarias Estrictas Aplicadas:</h3>
                     <div class="restriction-tags">
-                        <span class="tag">Sin Tomate</span>
-                        <span class="tag">Sin Pepino</span>
-                        <span class="tag">Sin Lechuga</span>
-                        <span class="tag">Sin Aguacate</span>
-                        <span class="tag">Sin Cebolla Cruda</span>
-                        <span class="tag">Sin Chile</span>
-                        <span class="tag">Sin Betabel</span>
-                        <span class="tag">Sin Kiwi</span>
+                        <span class="tag">Sin Tomate</span><span class="tag">Sin Pepino</span><span class="tag">Sin Lechuga</span>
+                        <span class="tag">Sin Aguacate</span><span class="tag">Sin Cebolla Cruda</span><span class="tag">Sin Chile</span>
+                        <span class="tag">Sin Betabel</span><span class="tag">Sin Kiwi</span>
                     </div>
                 </div>
 
-                <h2 class="section-title">Calculadora de Distribución Diaria Interactiva</h2>
-                <p style="font-size:14px; color:var(--text-muted); margin-bottom: 16px;">Selecciona una opción de comida para cada bloque y evalúa los totales acumulados frente al requerimiento establecido.</p>
-
-                <!-- Desayuno Section -->
-                <div class="meal-section-title">🍳 Bloque 1: Desayuno (7:00 – 8:00 AM)</div>
+                <h2 class="section-title">Planificador Diario Interactivo</h2>
+                
+                <div class="meal-section-title">🍳 Desayuno (7:00 – 8:00 AM)</div>
                 <div class="meal-options-grid">
-                    <div class="meal-card selected" onclick="selectMeal('desayuno', this, 28, 18, 16, 328)" data-p="28" data-c="18" data-g="16">
-                        <div class="meal-card-title">Opción A: Huevos con Espinacas</div>
-                        <div class="meal-card-desc">3 huevos enteros revueltos + espinacas tiernas salteadas con ajo + calabacita picada en cubos. Opcional: 1 rebanada de pan integral.</div>
-                        <div class="macro-pill-box">
-                            <span class="macro-pill p">P: 28g</span>
-                            <span class="macro-pill c">C: 18g</span>
-                            <span class="macro-pill g">G: 16g</span>
-                        </div>
+                    <div class="meal-card selected" onclick="selectMeal('desayuno', this, 28, 18, 16, 328)">
+                        <div class="meal-card-title">Opción A: Huevos con Verduras</div>
+                        <div class="meal-card-desc">3 huevos + espinacas salteadas con ajo + calabaza en cubos. Opcional: 1 rebanada de pan integral.</div>
+                        <div class="macro-pill-box"><span class="macro-pill p">P: 28g</span><span class="macro-pill c">C: 18g</span><span class="macro-pill g">G: 16g</span></div>
                     </div>
-                    <div class="meal-card" onclick="selectMeal('desayuno', this, 35, 5, 18, 322)" data-p="35" data-c="5" data-g="18">
+                    <div class="meal-card" onclick="selectMeal('desayuno', this, 35, 5, 18, 322)">
                         <div class="meal-card-title">Opción B: Omelet de Pavo y Queso</div>
-                        <div class="meal-card-desc">3 huevos enteros + 80g de pechuga de pavo picada + queso fresco o panela rallado + champiñones limpios salteados.</div>
-                        <div class="macro-pill-box">
-                            <span class="macro-pill p">P: 35g</span>
-                            <span class="macro-pill c">C: 5g</span>
-                            <span class="macro-pill g">G: 18g</span>
-                        </div>
+                        <div class="meal-card-desc">3 huevos + 80g pechuga de pavo rebanada + queso panela o fresco + champiñones salteados.</div>
+                        <div class="macro-pill-box"><span class="macro-pill p">P: 35g</span><span class="macro-pill c">C: 5g</span><span class="macro-pill g">G: 18g</span></div>
                     </div>
-                    <div class="meal-card" onclick="selectMeal('desayuno', this, 22, 28, 10, 290)" data-p="22" data-c="28" data-g="10">
-                        <div class="meal-card-title">Opción C: Yogur Griego y Nueces</div>
-                        <div class="meal-card-desc">250g de yogur griego natural sin azúcar añadido + 1 manzana o pera en cubos + 20g de nueces de árbol o almendras.</div>
-                        <div class="macro-pill-box">
-                            <span class="macro-pill p">P: 22g</span>
-                            <span class="macro-pill c">C: 28g</span>
-                            <span class="macro-pill g">G: 10g</span>
-                        </div>
+                    <div class="meal-card" onclick="selectMeal('desayuno', this, 22, 28, 10, 290)">
+                        <div class="meal-card-title">Opción C: Yogur Griego con Fruta</div>
+                        <div class="meal-card-desc">250g yogur griego natural sin azúcar + 1 manzana o pera + 20g nueces o almendras.</div>
+                        <div class="macro-pill-box"><span class="macro-pill p">P: 22g</span><span class="macro-pill c">C: 28g</span><span class="macro-pill g">G: 10g</span></div>
                     </div>
                 </div>
 
-                <!-- Comida Section -->
-                <div class="meal-section-title">🍗 Bloque 2: Comida Principal (1:00 – 2:00 PM)</div>
+                <div class="meal-section-title">🍗 Comida (1:00 – 2:00 PM)</div>
                 <div class="meal-options-grid">
-                    <div class="meal-card selected" onclick="selectMeal('comida', this, 52, 35, 8, 420)" data-p="52" data-c="35" data-g="8">
+                    <div class="meal-card selected" onclick="selectMeal('comida', this, 52, 35, 8, 420)">
                         <div class="meal-card-title">Opción A: Pechuga a la Plancha</div>
-                        <div class="meal-card-desc">200g de pechuga de pollo limpia + brócoli al vapor + zanahorias asadas + 100g de arroz integral cocido (puedes suprimir el arroz para recortar más carbohidratos).</div>
-                        <div class="macro-pill-box">
-                            <span class="macro-pill p">P: 52g</span>
-                            <span class="macro-pill c">C: 35g</span>
-                            <span class="macro-pill g">G: 8g</span>
-                        </div>
+                        <div class="meal-card-desc">200g pechuga + brócoli al vapor + zanahorias asadas + 100g arroz integral (puedes quitar el arroz para bajar carbs).</div>
+                        <div class="macro-pill-box"><span class="macro-pill p">P: 52g</span><span class="macro-pill c">C: 35g</span><span class="macro-pill g">G: 8g</span></div>
                     </div>
-                    <div class="meal-card" onclick="selectMeal('comida', this, 45, 12, 20, 408)" data-p="45" data-c="12" data-g="20">
-                        <div class="meal-card-title">Opción B: Carne Molida Magra</div>
-                        <div class="meal-card-desc">180g de carne molida magra de res o pavo salteada uniformemente con cubos de chayote, ejotes, zanahorias y ajo. Cocido en caldo natural.</div>
-                        <div class="macro-pill-box">
-                            <span class="macro-pill p">P: 45g</span>
-                            <span class="macro-pill c">C: 12g</span>
-                            <span class="macro-pill g">G: 20g</span>
-                        </div>
+                    <div class="meal-card" onclick="selectMeal('comida', this, 45, 12, 20, 408)">
+                        <div class="meal-card-title">Opción B: Carne Molida con Verduras</div>
+                        <div class="meal-card-desc">180g carne molida magra (res o pavo) salteada con chayote, ejotes, zanahoria y ajo en caldo natural.</div>
+                        <div class="macro-pill-box"><span class="macro-pill p">P: 45g</span><span class="macro-pill c">C: 12g</span><span class="macro-pill g">G: 20g</span></div>
                     </div>
-                    <div class="meal-card" onclick="selectMeal('comida', this, 48, 15, 6, 306)" data-p="48" data-c="15" data-g="6">
-                        <div class="meal-card-title">Opción C: Ensalada Proteica de Col</div>
-                        <div class="meal-card-desc">2 latas de atún en agua drenadas + col blanca finamente rallada + zanahoria + granos de elote natural. Aderezar con mostaza o limón (evitar mayonesas).</div>
-                        <div class="macro-pill-box">
-                            <span class="macro-pill p">P: 48g</span>
-                            <span class="macro-pill c">C: 15g</span>
-                            <span class="macro-pill g">G: 6g</span>
-                        </div>
+                    <div class="meal-card" onclick="selectMeal('comida', this, 48, 15, 6, 306)">
+                        <div class="meal-card-title">Opción C: Atún con Ensalada de Col</div>
+                        <div class="meal-card-desc">2 latas de atún en agua + col y zanahoria rallada + elote + aderezo de mostaza o limón. Sin mayonesa.</div>
+                        <div class="macro-pill-box"><span class="macro-pill p">P: 48g</span><span class="macro-pill c">C: 15g</span><span class="macro-pill g">G: 6g</span></div>
                     </div>
                 </div>
 
-                <!-- Cena Section -->
-                <div class="meal-section-title">🐟 Bloque 3: Cena Ligera (7:00 – 8:00 PM)</div>
+                <div class="meal-section-title">🐟 Cena (7:00 – 8:00 PM)</div>
                 <div class="meal-options-grid">
-                    <div class="meal-card selected" onclick="selectMeal('cena', this, 28, 6, 2, 154)" data-p="28" data-c="6" data-g="2">
+                    <div class="meal-card selected" onclick="selectMeal('cena', this, 28, 6, 2, 154)">
                         <div class="meal-card-title">Opción A: Claras con Nopales</div>
-                        <div class="meal-card-desc">5 claras de huevo revueltas con nopales cocidos tiernos y champiñones fileteados. Aporte energético sumamente bajo y limpio.</div>
-                        <div class="macro-pill-box">
-                            <span class="macro-pill p">P: 28g</span>
-                            <span class="macro-pill c">C: 6g</span>
-                            <span class="macro-pill g">G: 2g</span>
-                        </div>
+                        <div class="meal-card-desc">5 claras de huevo revueltas con nopales cocidos y champiñones. Muy bajo en carbohidratos.</div>
+                        <div class="macro-pill-box"><span class="macro-pill p">P: 28g</span><span class="macro-pill c">C: 6g</span><span class="macro-pill g">G: 2g</span></div>
                     </div>
-                    <div class="meal-card" onclick="selectMeal('cena', this, 35, 10, 5, 225)" data-p="35" data-c="10" data-g="5">
-                        <div class="meal-card-title">Opción B: Consomé de Pollo Casero</div>
-                        <div class="meal-card-desc">150g de pechuga de pollo deshebrada en caldo casero desgrasado con calabaza, zanahoria, apio y chayote. Sin fideos para controlar carbohidratos.</div>
-                        <div class="macro-pill-box">
-                            <span class="macro-pill p">P: 35g</span>
-                            <span class="macro-pill c">C: 10g</span>
-                            <span class="macro-pill g">G: 5g</span>
-                        </div>
+                    <div class="meal-card" onclick="selectMeal('cena', this, 35, 10, 5, 225)">
+                        <div class="meal-card-title">Opción B: Sopa de Pollo con Verduras</div>
+                        <div class="meal-card-desc">150g pollo deshebrado + caldo casero + calabaza, zanahoria, apio, chayote. Sin fideos.</div>
+                        <div class="macro-pill-box"><span class="macro-pill p">P: 35g</span><span class="macro-pill c">C: 10g</span><span class="macro-pill g">G: 5g</span></div>
                     </div>
-                    <div class="meal-card" onclick="selectMeal('cena', this, 24, 20, 4, 212)" data-p="24" data-c="20" data-g="4">
-                        <div class="meal-card-title">Opción C: Requesón / Cottage y Fruta</div>
-                        <div class="meal-card-desc">200g de requesón artesanal o queso cottage bajo en grasa + 1 manzana fresca cortada en finas rodajas o fresas enteras.</div>
-                        <div class="macro-pill-box">
-                            <span class="macro-pill p">P: 24g</span>
-                            <span class="macro-pill c">C: 20g</span>
-                            <span class="macro-pill g">G: 4g</span>
-                        </div>
+                    <div class="meal-card" onclick="selectMeal('cena', this, 24, 20, 4, 212)">
+                        <div class="meal-card-title">Opción C: Requesón o Cottage con Fruta</div>
+                        <div class="meal-card-desc">200g requesón o queso cottage + 1 manzana en rebanadas o fresas frescas. Simple y saciante.</div>
+                        <div class="macro-pill-box"><span class="macro-pill p">P: 24g</span><span class="macro-pill c">C: 20g</span><span class="macro-pill g">G: 4g</span></div>
                     </div>
                 </div>
 
-                <!-- Live Matrix Summary Header -->
                 <div class="nutrition-tracker-banner">
-                    <h3 style="font-size: 16px; font-weight:700; margin-bottom:12px;">Balance diario acumulado de las opciones elegidas:</h3>
                     <div class="tracker-grid">
-                        <div class="tracker-item">
-                            <div class="tracker-val" id="total-p">108g</div>
-                            <div class="tracker-lbl">Proteína Total (Meta: 130-140g)</div>
-                        </div>
-                        <div class="tracker-item">
-                            <div class="tracker-val" id="total-c">59g</div>
-                            <div class="tracker-lbl">Carbohidratos Totales</div>
-                        </div>
-                        <div class="tracker-item">
-                            <div class="tracker-val" id="total-g">26g</div>
-                            <div class="tracker-lbl">Grasas Totales</div>
-                        </div>
-                        <div class="tracker-item">
-                            <div class="tracker-val" id="total-cal">902 kcal</div>
-                            <div class="tracker-lbl">Energía Neta Total*</div>
-                        </div>
+                        <div class="tracker-item"><div class="tracker-val" id="total-p">0g</div><div class="tracker-lbl">Proteína (Meta 130-140g)</div></div>
+                        <div class="tracker-item"><div class="tracker-val" id="total-c">0g</div><div class="tracker-lbl">Carbohidratos</div></div>
+                        <div class="tracker-item"><div class="tracker-val" id="total-g">0g</div><div class="tracker-lbl">Grasas</div></div>
+                        <div class="tracker-item"><div class="tracker-val" id="total-cal">0 kcal</div><div class="tracker-lbl">Energía Seleccionada</div></div>
                     </div>
-                    <p style="font-size:11px; color: var(--text-muted); margin-top:12px; font-style:italic;">*Nota: El cálculo dinámico suma la aproximación base de las opciones principales. Completa con porciones vegetales libres y grasas de cocción (aceite de oliva medido) para situarte en el umbral óptimo de 1,600 - 1,800 kcal.</p>
                 </div>
 
-                <!-- Hydration Tracker Container -->
                 <div class="hydration-ui">
                     <div class="hydration-left">
-                        <h3>Módulo de Hidratación Obligatorio</h3>
-                        <p>Mínimo de 2.5 litros diarios. Consume un vaso completo al despertar y uno antes de cada comida.</p>
+                        <h3>Control de Hidratación Celular</h3>
+                        <p>Meta: Mínimo 2.5 litros de agua natural al día.</p>
                     </div>
                     <div class="water-controls">
                         <button class="water-btn" onclick="updateWater(-250)">-</button>
@@ -1020,71 +929,45 @@
 
             <!-- TAB 4: HABITOS -->
             <div id="habitos" class="tab-content">
-                <h2 class="section-title">Estrategia Ergónomica para Trabajo de Oficina Sedentario</h2>
-                
-                <div class="habit-grid" style="margin-bottom: 32px;">
+                <h2 class="section-title">Estrategia para Trabajo de Oficina</h2>
+                <div class="habit-grid">
                     <div class="habit-card">
-                        <div style="font-size:24px;">⏰</div>
+                        <div style="font-size:20px; flex-shrink:0;">⏰</div>
                         <div class="habit-card-body">
-                            <h4>Alertas Activas de Movimiento</h4>
-                            <p>Establecer una alarma cada 45–60 minutos. Levantarse del asiento e interrumpir la postura estática caminando de 2 a 3 minutos continuos.</p>
+                            <h4>Levantarse cada hora</h4>
+                            <p>Cada 45–60 min camina 2–3 minutos. Configura una alarma de escritorio para romper el sedentarismo.</p>
                         </div>
                     </div>
                     <div class="habit-card">
-                        <div style="font-size:24px;">🪜</div>
+                        <div style="font-size:20px; flex-shrink:0;">🪜</div>
                         <div class="habit-card-body">
-                            <h4>Uso Absoluto de Escaleras</h4>
-                            <p>Prohibición de uso de elevadores en la jornada diaria. Cada escalón suma al conteo de pasos invisibles fundamentales para elevar el gasto NEAT.</p>
+                            <h4>Escaleras como regla</h4>
+                            <p>Evita por completo el elevador. Suma pasos mecánicos invisibles durante toda la jornada.</p>
                         </div>
                     </div>
                     <div class="habit-card">
-                        <div style="font-size:24px;">🍳</div>
+                        <div style="font-size:20px; flex-shrink:0;">🍱</div>
                         <div class="habit-card-body">
-                            <h4>Desayuno Previo al Abandono del Hogar</h4>
-                            <p>No salir en estado de ayuno prolongado para neutralizar compras impulsivas o ingesta de snacks altamente calóricos e insanos en la oficina.</p>
-                        </div>
-                    </div>
-                    <div class="habit-card">
-                        <div style="font-size:24px;">🍱</div>
-                        <div class="habit-card-body">
-                            <h4>Estrategia Meal Prep Dominical</h4>
-                            <p>Cocinar y racionar bloques enteros de proteínas limpias el domingo por la tarde. Mitiga la necesidad de improvisación alimenticia semanal.</p>
+                            <h4>Meal Prep dominical</h4>
+                            <p>Cocina tus porciones de proteína en volumen el domingo. Neutraliza la necesidad de improvisar fuera.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="avoid-box">
-                    <h3>⛔ Productos Críticos a Evitar y Sustituciones Directas</h3>
-                    <div class="table-container" style="background-color: white; margin-bottom:0;">
+                    <h3>⛔ Productos a Erradicar</h3>
+                    <div class="table-container" style="background-color:white; margin-bottom:0;">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Elemento Crítico</th>
-                                    <th>Por qué se debe erradicar</th>
-                                    <th>Sustitución Inteligente Propuesta</th>
+                                    <th>Evitar</th>
+                                    <th>Alternativa Inteligente</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><b>Refrescos y jugos procesados</b></td>
-                                    <td>Calorías líquidas vacías de asimilación rápida. Suman hasta 600 kcal adicionales sin saciedad.</td>
-                                    <td><span style="color:var(--success); font-weight:600;">Agua mineralizada con rodajas de limón natural.</span></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Pan de harina blanca y galletas</b></td>
-                                    <td>Harinas refinadas de alto índice glucémico que disparan los niveles de azúcar e insulina.</td>
-                                    <td><span style="color:var(--success); font-weight:600;">1 rebanada de pan integral de grano entero o 2 tortillas de maíz.</span></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Frituras y snacks de bolsa</b></td>
-                                    <td>Densidad calórica extrema con grasas trans e hipersodio. Saboteador silencioso de oficina.</td>
-                                    <td><span style="color:var(--success); font-weight:600;">20g de nueces o porciones medidas de jícama con limón.</span></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Bebidas alcohólicas</b></td>
-                                    <td>Calorías vacías de degradación hepática prioritaria que detienen la oxidación de grasas y aumentan apetito.</td>
-                                    <td><span style="color:var(--success); font-weight:600;">Agua purificada fría, infusiones o té sin azúcar.</span></td>
-                                </tr>
+                                <tr><td><b>Refrescos / Jugos</b> (Calorías vacías)</td><td>Agua mineral con limón natural.</td></tr>
+                                <tr><td><b>Pan blanco o galletas</b> (Picos de azúcar)</td><td>1 rebanada de pan integral o 2 tortillas de maíz.</td></tr>
+                                <tr><td><b>Snacks de bolsa / Frituras</b></td><td>Nueces pesadas o jícama picada con limón.</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -1096,111 +979,94 @@
 </div>
 
 <script>
-    // Tab switching architecture
     function switchTab(event, tabId) {
-        const contents = document.querySelectorAll('.tab-content');
-        contents.forEach(content => content.classList.remove('active'));
-        
-        const buttons = document.querySelectorAll('.tab-btn');
-        buttons.forEach(btn => btn.classList.remove('active'));
-        
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         event.currentTarget.classList.add('active');
-
-        // Initial setup for workout content loading if user goes to that tab
-        if(tabId === 'entrenamiento') {
-            const activeDayBtn = document.querySelector('.day-btn.active');
-            if(activeDayBtn) {
-                // Keep current loaded day
-            } else {
-                loadWorkout('lunes');
-            }
-        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Comprehensive Exercise Database from provided configuration
     const workoutData = {
         lunes: {
             focus: "Tren Inferior (Fuerza)",
-            notes: "Énfasis en cuádriceps, glúteos y pantorrillas. Controla la bajada lenta en las sentadillas.",
+            notes: "Énfasis en cuádriceps y glúteos. Controla el ritmo de bajada lenta.",
             exercises: [
-                { name: "Sentadillas libres", target: "4 series × 15 repeticiones" },
-                { name: "Zancadas / Desplantes estáticos", target: "3 series × 12 repeticiones por pierna" },
-                { name: "Puente de glúteos (suelo)", target: "4 series × 20 repeticiones" },
-                { name: "Sentadilla tipo Sumo", target: "3 series × 15 repeticiones" },
-                { name: "Calf raises (Elevación de talones)", target: "3 series × 20 repeticiones" }
+                { name: "Sentadillas libres", target: "4 x 15" },
+                { name: "Zancadas estáticas", target: "3 x 12 por lado" },
+                { name: "Puente de glúteos", target: "4 x 20" },
+                { name: "Sentadilla sumo", target: "3 x 15" },
+                { name: "Calf raises (Pantorrillas)", target: "3 x 20" }
             ]
         },
         martes: {
-            focus: "Cardio Moderado LISS",
-            notes: "Mantén un ritmo constante donde puedas hablar pero te cueste respirar profundamente.",
+            focus: "Cardio Moderado",
+            notes: "Mantén un ritmo aeróbico constante y cómodo.",
             exercises: [
-                { name: "Marcha estática en el lugar (Calentamiento)", target: "1 serie × 5 minutos" },
-                { name: "Jumping jacks controlados", target: "3 series × 45 segundos" },
-                { name: "Step touch lateral continuo", target: "3 series × 1 minuto" },
-                { name: "Elevación de rodillas al pecho", target: "3 series × 30 segundos" },
-                { name: "Estiramiento muscular pasivo (Enfriamiento)", target: "1 serie × 10 minutos" }
+                { name: "Marcha en el lugar (Calentamiento)", target: "5 min" },
+                { name: "Jumping jacks", target: "3 x 45 seg" },
+                { name: "Step touch lateral", target: "3 x 1 min" },
+                { name: "Rodillas al pecho", target: "3 x 30 seg" },
+                { name: "Estiramiento muscular", target: "10 min" }
             ]
         },
         miercoles: {
             focus: "Tren Superior (Fuerza)",
-            notes: "Ejecuta los dips controlando los codos. Usa una mochila firme para el remo.",
+            notes: "Control de codos en los dips. Usa una mochila firme para el remo.",
             exercises: [
-                { name: "Flexiones de brazos (Lagartijas)", target: "4 series × 10 repeticiones" },
-                { name: "Flexiones inclinadas (Apoyo en mesa firme o pared)", target: "3 series × 12 repeticiones" },
-                { name: "Dips / Fondos apoyado en silla", target: "3 series × 12 repeticiones" },
-                { name: "Remo horizontal (Utilizando mochila con peso)", target: "4 series × 12 repeticiones" },
-                { name: "Isometría de plancha abdominal estándar", target: "3 series × 30 segundos" }
+                { name: "Flexiones de brazos (Lagartijas)", target: "4 x 10" },
+                { name: "Flexiones inclinadas (Mesa/Pared)", target: "3 x 12" },
+                { name: "Dips en silla (Fondos)", target: "3 x 12" },
+                { name: "Remo con mochila cargada", target: "4 x 12" },
+                { name: "Plancha abdominal isométrica", target: "3 x 30 seg" }
             ]
         },
         jueves: {
             focus: "Fullbody (Cuerpo Completo)",
-            notes: "Día metabólico demandante. Los burpees modificados eliminan la flexión del suelo si es necesario.",
+            notes: "Sesión de alta demanda metabólica.",
             exercises: [
-                { name: "Burpees modificados (Sin impacto extremo)", target: "3 series × 10 repeticiones" },
-                { name: "Sentadillas profundas + Press de hombro (Con mochila)", target: "3 series × 12 repeticiones" },
-                { name: "Mountain climbers (Escaladores en suelo)", target: "3 series × 30 segundos" },
-                { name: "Combinado: Remo vertical + Zancada posterior", target: "3 series × 10 repeticiones" },
-                { name: "Abdominales tipo crunch clásico", target: "3 series × 15 repeticiones" }
+                { name: "Burpees modificados", target: "3 x 10" },
+                { name: "Sentadillas + Press con mochila", target: "3 x 12" },
+                { name: "Mountain climbers", target: "3 x 30 seg" },
+                { name: "Remo + Zancada combinada", target: "3 x 10" },
+                { name: "Abdominales crunch", target: "3 x 15" }
             ]
         },
         viernes: {
-            focus: "Descanso Activo & Movilidad",
-            notes: "Ideal al concluir la semana laboral: recuperas articulaciones antes del esfuerzo del sábado.",
+            focus: "Descanso Activo",
+            notes: "Recuperación articular estratégica antes del HIIT del sábado.",
             exercises: [
-                { name: "Caminata al aire libre o caminadora a ritmo tranquilo", target: "Duración: 20 a 30 minutos" },
-                { name: "Yoga básico adaptado o secuencias de estiramiento general", target: "Continuo" },
-                { name: "Movilidad articular profunda (Hombros, zona lumbar, cadera, rodillas)", target: "Enfoque terapéutico" }
+                { name: "Caminata tranquila continua", target: "20–30 min" },
+                { name: "Yoga básico o estiramientos globales", target: "Fluido" },
+                { name: "Movilidad articular selectiva", target: "Rutina" }
             ]
         },
         sabado: {
-            focus: "HIIT Adaptado Suave",
-            notes: "Estructura rigurosa: Ejecuta 20 segundos a alta intensidad seguidos de 40 segundos de descanso pasivo. Completa 8 rondas de los 4 ejercicios.",
+            focus: "HIIT Suave Adaptado",
+            notes: "Estructura: 20 seg de esfuerzo por 40 seg de descanso. Realizar 8 rondas.",
             exercises: [
-                { name: "Fase de Calentamiento general dinámico", target: "Duración: 5 minutos" },
-                { name: "Bloque HIIT principal (Jumping Jacks / Rodillas / Step Touch / Saltos)", target: "Duración aproximada: 25 minutos" },
-                { name: "Fase de Enfriamiento avanzado y estiramientos dirigidos", target: "Duración: 10 minutos" }
+                { name: "Calentamiento dinámico inicial", target: "5 min" },
+                { name: "Bloque HIIT (Jacks/Rodillas/Step/Saltos)", target: "~25 min" },
+                { name: "Enfriamiento estático final", target: "10 min" }
             ]
         },
         domingo: {
             focus: "Descanso Absoluto",
-            notes: "Recuperación de fibras musculares y descanso psicológico.",
+            notes: "Cero entrenamientos. Optimizar la hidratación y el sueño profundo.",
             exercises: [
-                { name: "Suspensión de entrenamiento físico", target: "24 horas completas" },
-                { name: "Estiramientos libres muy suaves (Opcional)", target: "A demanda" },
-                { name: "Priorizar hidratación celular activa y calidad del sueño", target: "Obligatorio" }
+                { name: "Descanso físico integral", target: "24 hrs" },
+                { name: "Estiramientos libres muy suaves", target: "Opcional" }
             ]
         }
     };
 
     function loadWorkout(day) {
-        // Handle button active state updates
-        const buttons = document.querySelectorAll('.day-btn');
-        buttons.forEach(btn => {
-            if(btn.textContent.toLowerCase() === day || (day==='miercoles' && btn.textContent==='Miércoles') || (day==='sabado' && btn.textContent==='Sábado')) {
-                btn.classList.add('active');
+        const btnGroup = document.querySelectorAll('.day-btn');
+        btnGroup.forEach(b => {
+            if(b.textContent.toLowerCase() === day || (day==='miercoles' && b.textContent==='Miércoles') || (day==='sabado' && b.textContent==='Sábado')) {
+                b.classList.add('active');
             } else {
-                btn.classList.remove('active');
+                b.classList.remove('active');
             }
         });
 
@@ -1212,31 +1078,27 @@
         const container = document.getElementById('exercise-list-container');
         container.innerHTML = '';
 
-        data.exercises.forEach((ex, index) => {
-            const div = document.createElement('div');
-            div.className = 'exercise-item';
-            div.id = `ex-item-${day}-${index}`;
-            div.innerHTML = `
+        data.exercises.forEach((ex, idx) => {
+            const item = document.createElement('div');
+            item.className = 'exercise-item';
+            item.id = `ex-${day}-${idx}`;
+            item.innerHTML = `
                 <div class="exercise-left">
-                    <input type="checkbox" class="exercise-checkbox" onchange="toggleExercise(this, '${day}-${index}')">
+                    <input type="checkbox" class="exercise-checkbox" onchange="toggleExercise(this, '${day}-${idx}')">
                     <span class="exercise-name">${ex.name}</span>
                 </div>
                 <div class="exercise-badge-right">${ex.target}</div>
             `;
-            container.appendChild(div);
+            container.appendChild(item);
         });
     }
 
-    function toggleExercise(checkbox, itemId) {
-        const item = document.getElementById(`ex-item-${itemId}`);
-        if(checkbox.checked) {
-            item.classList.add('completed');
-        } else {
-            item.classList.remove('completed');
-        }
+    function toggleExercise(checkbox, id) {
+        const item = document.getElementById(`ex-${id}`);
+        if(checkbox.checked) item.classList.add('completed');
+        else item.classList.remove('completed');
     }
 
-    // Macro Calculator state variables
     let selectedMeals = {
         desayuno: { p: 28, c: 18, g: 16, cal: 328 },
         comida: { p: 52, c: 35, g: 8, cal: 420 },
@@ -1244,30 +1106,24 @@
     };
 
     function selectMeal(type, element, p, c, g, cal) {
-        // Clean matching group cards selection states
-        const parentGrid = element.parentElement;
-        const cards = parentGrid.querySelectorAll('.meal-card');
-        cards.forEach(card => card.classList.remove('selected'));
-        
+        element.parentElement.querySelectorAll('.meal-card').forEach(card => card.classList.remove('selected'));
         element.classList.add('selected');
-
         selectedMeals[type] = { p: p, c: c, g: g, cal: cal };
         calculateDailyMacros();
     }
 
     function calculateDailyMacros() {
-        let totalP = selectedMeals.desayuno.p + selectedMeals.comida.p + selectedMeals.cena.p;
-        let totalC = selectedMeals.desayuno.c + selectedMeals.comida.c + selectedMeals.cena.c;
-        let totalG = selectedMeals.desayuno.g + selectedMeals.comida.g + selectedMeals.cena.g;
-        let totalCal = selectedMeals.desayuno.cal + selectedMeals.comida.cal + selectedMeals.cena.cal;
+        let p = selectedMeals.desayuno.p + selectedMeals.comida.p + selectedMeals.cena.p;
+        let c = selectedMeals.desayuno.c + selectedMeals.comida.c + selectedMeals.cena.c;
+        let g = selectedMeals.desayuno.g + selectedMeals.comida.g + selectedMeals.cena.g;
+        let cal = selectedMeals.desayuno.cal + selectedMeals.comida.cal + selectedMeals.cena.cal;
 
-        document.getElementById('total-p').textContent = totalP + ' g';
-        document.getElementById('total-c').textContent = totalC + ' g';
-        document.getElementById('total-g').textContent = totalG + ' g';
-        document.getElementById('total-cal').textContent = totalCal + ' kcal';
+        document.getElementById('total-p').textContent = p + ' g';
+        document.getElementById('total-c').textContent = c + ' g';
+        document.getElementById('total-g').textContent = g + ' g';
+        document.getElementById('total-cal').textContent = cal + ' kcal';
     }
 
-    // Hydration tracking counter logic
     let waterVolume = 0;
     function updateWater(amount) {
         waterVolume += amount;
@@ -1275,7 +1131,6 @@
         document.getElementById('water-display').textContent = waterVolume + ' / 2500 ml';
     }
 
-    // Initial lifecycle kickoff run execution
     window.onload = function() {
         loadWorkout('lunes');
         calculateDailyMacros();
